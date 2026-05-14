@@ -1,9 +1,6 @@
 # Credenziali DB - mai su git
 wp-config.php
 
-# Tema con repo git proprio (gestito separatamente)
-wp-content/themes/pocket-theme/
-
 # Upload utenti
 wp-content/uploads/
 
