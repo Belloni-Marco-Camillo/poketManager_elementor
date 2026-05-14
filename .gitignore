@@ -1,0 +1,43 @@
+# WordPress core
+wp-admin/
+wp-includes/
+wp-blog-header.php
+wp-comments-post.php
+wp-cron.php
+wp-links-opml.php
+wp-load.php
+wp-login.php
+wp-mail.php
+wp-settings.php
+wp-signup.php
+wp-trackback.php
+wp-activate.php
+xmlrpc.php
+index.php
+license.txt
+readme.html
+
+# Config con credenziali
+wp-config.php
+wp-config-sample.php
+
+# Upload e cache
+wp-content/uploads/
+wp-content/cache/
+wp-content/upgrade/
+wp-content/backup-db/
+wp-content/advanced-cache.php
+wp-content/wp-cache-config.php
+
+# Plugin (non custom)
+wp-content/plugins/
+
+# Parent theme (non nostra)
+wp-content/themes/hello-elementor/
+wp-content/themes/hello-elementor-child/node_modules/
+
+# OS / IDE
+.DS_Store
+.idea/
+.vscode/
+*.log

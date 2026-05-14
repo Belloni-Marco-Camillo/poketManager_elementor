@@ -1,0 +1,166 @@
+:root{
+  --text: #111;
+  --muted: #666;
+  --maxw: 900px;
+}
+
+*{ box-sizing: border-box; }
+
+body{
+  margin:0;
+  font-family: Georgia, "Times New Roman", Times, serif;
+  background:#fff;
+  color:var(--text);
+  min-height:100vh;
+}
+
+/* Centro pagina */
+.stage{
+  min-height:100vh;
+  display:grid;
+  place-items:center;
+  padding: 48px 24px;
+}
+
+.qa{
+  width: 100%;
+  max-width: var(--maxw);
+  text-align:center;
+  transform: translateY(-4vh);
+}
+
+.question{
+  font-size: 18px;
+  line-height: 1.6;
+  margin: 0 0 28px 0;
+  font-weight: 400;
+}
+
+.answers{
+  display:flex;
+  flex-direction:column;
+  gap: 14px;
+  align-items:center;
+}
+
+/* Risposte “testuali” cliccabili */
+.answer-btn{
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  font: inherit;
+  font-size: 16px;
+  line-height: 1.5;
+  padding: 2px 6px;
+  color: var(--text);
+}
+
+.answer-btn:hover{
+  text-decoration: underline;
+}
+
+/* Link skip in basso a destra */
+.skip{
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  font-size: 14px;
+  color: var(--text);
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.skip:hover{
+  text-decoration: underline;
+}
+
+/* Output JSON */
+.result{
+  width: 100%;
+  max-width: min(980px, calc(100vw - 48px));
+  text-align: left;
+  margin: 0 auto;
+}
+
+.result h2{
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0 0 12px 0;
+  text-align:center;
+}
+
+pre{
+  margin: 0;
+  padding: 16px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow:auto;
+  font-size: 12px;
+  line-height: 1.4;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  background: #fafafa;
+  white-space: pre;
+  color: #111;
+}
+
+.result-actions{
+  display:flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 14px;
+}
+
+.smallbtn{
+  font-family: inherit;
+  cursor:pointer;
+  border: 1px solid #ddd;
+  background: #fff;
+  padding: 8px 12px;
+  border-radius: 8px;
+}
+
+.smallbtn:hover{
+  background:#f6f6f6;
+}
+
+.hint{
+  margin-top: 10px;
+  text-align:center;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+/* --- Cloud dissolve transition --- */
+.qa {
+  position: relative;
+}
+
+/* wrapper per animare uscita/entrata */
+.qa-inner {
+  display: block;
+  will-change: opacity, transform, filter;
+}
+
+/* Stato di uscita: svanisce e “si dissolve” */
+.qa-inner.is-leaving {
+  animation: cloudOut 420ms ease forwards;
+}
+
+/* Stato di entrata: arriva morbido */
+.qa-inner.is-entering {
+  animation: cloudIn 520ms ease forwards;
+}
+
+@keyframes cloudOut {
+  0%   { opacity: 1; transform: translateY(0) scale(1); filter: blur(0px); }
+  70%  { opacity: 0.25; transform: translateY(-6px) scale(0.995); filter: blur(6px); }
+  100% { opacity: 0; transform: translateY(-10px) scale(0.99); filter: blur(10px); }
+}
+
+@keyframes cloudIn {
+  0%   { opacity: 0; transform: translateY(10px) scale(0.99); filter: blur(10px); }
+  70%  { opacity: 0.9; transform: translateY(2px) scale(1); filter: blur(2px); }
+  100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0px); }
+}
