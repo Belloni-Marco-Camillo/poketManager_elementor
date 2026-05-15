@@ -72,20 +72,14 @@ function subtitle(string $text, string $align = 'center'): array {
     ]);
 }
 function btn(string $label, string $url, string $bg = '#171E34', string $color = '#E9E3DA'): array {
-    $s = [
+    return w('button', [
         'text' => $label, 'link' => ['url'=>$url,'is_external'=>false], 'align' => 'center',
         'background_color' => $bg, 'button_text_color' => $color,
         'border_radius' => ['unit'=>'px','top'=>'4','right'=>'4','bottom'=>'4','left'=>'4','isLinked'=>true],
         'text_padding' => ['unit'=>'px','top'=>'14','right'=>'32','bottom'=>'14','left'=>'32','isLinked'=>false],
         'typography_typography' => 'custom', 'typography_font_family' => 'Marcellus SC',
         'typography_font_size' => ['unit'=>'px','size'=>13], 'typography_letter_spacing' => ['unit'=>'em','size'=>0.07],
-    ];
-    if ($bg === 'transparent') {
-        $s['border_border'] = 'solid';
-        $s['border_width'] = ['unit'=>'px','top'=>'1','right'=>'1','bottom'=>'1','left'=>'1','isLinked'=>true];
-        $s['border_color'] = $color;
-    }
-    return w('button', $s);
+    ]);
 }
 function shortcode(string $code): array {
     return w('shortcode', ['shortcode' => $code]);
