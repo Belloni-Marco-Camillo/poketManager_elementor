@@ -160,7 +160,20 @@ $elements = [
         'padding' => ['unit'=>'px','top'=>'96','right'=>'0','bottom'=>'96','left'=>'0','isLinked'=>false],
     ]),
 
-    // 5. CTA finale
+    // 5. Quiz
+    section([
+        inner([
+            eyebrow('TROVA IL TUO PERCORSO'),
+            heading('Scopri quale servizio fa per te', 'h2', 'center', '#171E34', 32),
+            body_text('<p>Rispondi a una domanda. Ti aiutiamo a capire di cosa ha bisogno il tuo business.</p>', 'center', 16),
+            shortcode('[pm_quiz]'),
+        ], ['align_items'=>'center']),
+    ], [
+        'background_background' => 'classic', 'background_color' => '#ffffff',
+        'padding' => ['unit'=>'px','top'=>'80','right'=>'0','bottom'=>'80','left'=>'0','isLinked'=>false],
+    ]),
+
+    // 6. CTA finale
     section([
         narrow([
             heading('Pronto a fare chiarezza nel tuo business?', 'h2', 'center', '#E9E3DA', 32),
