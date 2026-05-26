@@ -27,46 +27,28 @@
       ?>
     </a>
 
-    <?php // Desktop nav + CTA ?>
     <div class="pm-header__right">
-      <nav class="pm-nav" aria-label="Navigazione principale">
-        <?php
-        wp_nav_menu([
-          'theme_location' => 'primary_navigation',
-          'container'      => false,
-          'items_wrap'     => '<ul>%3$s</ul>',
-          'fallback_cb'    => false,
-        ]);
-        ?>
-      </nav>
-      <a href="https://sl1nk.com/come-possiamo-aiutarti" class="pm-btn pm-btn--primary pm-header__cta">
-        Lavoriamo insieme
-      </a>
+      <a href="https://sl1nk.com/come-possiamo-aiutarti" class="pm-header__cta">Lavora con noi</a>
+      <button id="pm-menu-toggle" class="pm-hamburger" aria-label="Apri menu" aria-expanded="false">
+        <span id="pm-bar1"></span>
+        <span id="pm-bar2"></span>
+        <span id="pm-bar3"></span>
+      </button>
     </div>
 
-    <?php // Hamburger ?>
-    <button id="pm-menu-toggle" class="pm-hamburger" aria-label="Apri menu" aria-expanded="false">
-      <span id="pm-bar1"></span>
-      <span id="pm-bar2"></span>
-      <span id="pm-bar3"></span>
-    </button>
-
-  </div>
-
-  <?php // Mobile menu ?>
-  <div id="pm-mobile-menu" class="pm-mobile-menu pm-hidden">
-    <div class="pm-container pm-mobile-menu__inner">
-      <?php
-      wp_nav_menu([
-        'theme_location' => 'primary_navigation',
-        'container'      => false,
-        'items_wrap'     => '<ul>%3$s</ul>',
-        'fallback_cb'    => false,
-      ]);
-      ?>
-      <a href="https://sl1nk.com/come-possiamo-aiutarti" class="pm-btn pm-btn--primary" style="text-align:center;">
-        Lavoriamo insieme
-      </a>
-    </div>
   </div>
 </header>
+
+<?php // Fullscreen nav overlay ?>
+<div id="pm-overlay" class="pm-overlay" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Menu">
+  <nav class="pm-overlay__nav" aria-label="Menu principale">
+    <?php
+    wp_nav_menu([
+      'theme_location' => 'primary_navigation',
+      'container'      => false,
+      'items_wrap'     => '<ul>%3$s</ul>',
+      'fallback_cb'    => false,
+    ]);
+    ?>
+  </nav>
+</div>

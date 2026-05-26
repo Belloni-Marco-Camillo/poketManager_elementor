@@ -1,25 +1,48 @@
 (function () {
-  // Mobile nav toggle
-  var btn  = document.getElementById('pm-menu-toggle');
-  var menu = document.getElementById('pm-mobile-menu');
-  var bar1 = document.getElementById('pm-bar1');
-  var bar2 = document.getElementById('pm-bar2');
-  var bar3 = document.getElementById('pm-bar3');
-  if (btn && menu) {
-    btn.addEventListener('click', function () {
-      var hidden = menu.classList.toggle('pm-hidden');
-      btn.setAttribute('aria-expanded', String(!hidden));
-      if (!hidden) {
-        bar1.style.transform = 'translateY(8px) rotate(45deg)';
-        bar2.style.opacity   = '0';
-        bar3.style.transform = 'translateY(-8px) rotate(-45deg)';
-      } else {
-        bar1.style.transform = '';
-        bar2.style.opacity   = '';
-        bar3.style.transform = '';
-      }
-    });
+  // Fullscreen nav overlay
+  var btn     = document.getElementById('pm-menu-toggle');
+  var overlay = document.getElementById('pm-overlay');
+  var bar1    = document.getElementById('pm-bar1');
+  var bar2    = document.getElementById('pm-bar2');
+  var bar3    = document.getElementById('pm-bar3');
+
+  if (!btn || !overlay) return;
+
+  function openMenu() {
+    overlay.classList.add('is-open');
+    overlay.setAttribute('aria-hidden', 'false');
+    btn.setAttribute('aria-expanded', 'true');
+    btn.classList.add('is-open');
+    bar1.style.transform = 'translateY(7px) rotate(45deg)';
+    bar2.style.opacity   = '0';
+    bar3.style.transform = 'translateY(-7px) rotate(-45deg)';
+    document.body.style.overflow = 'hidden';
   }
+
+  function closeMenu() {
+    overlay.classList.remove('is-open');
+    overlay.setAttribute('aria-hidden', 'true');
+    btn.setAttribute('aria-expanded', 'false');
+    btn.classList.remove('is-open');
+    bar1.style.transform = '';
+    bar2.style.opacity   = '';
+    bar3.style.transform = '';
+    document.body.style.overflow = '';
+  }
+
+  btn.addEventListener('click', function () {
+    overlay.classList.contains('is-open') ? closeMenu() : openMenu();
+  });
+
+  // Close on nav link click
+  overlay.querySelectorAll('a').forEach(function (a) {
+    a.addEventListener('click', closeMenu);
+  });
+
+  // Close on ESC
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closeMenu();
+  });
 
   // Parallax hero
   var hero = document.querySelector('.pm-hero');
