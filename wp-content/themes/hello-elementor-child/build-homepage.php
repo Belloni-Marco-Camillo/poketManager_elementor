@@ -8,6 +8,30 @@ if (php_sapi_name() !== 'cli' && ! current_user_can('manage_options')) wp_die('N
 
 global $wpdb;
 
+// ── Seed testimonianze (solo se non esistono) ─────────────────────────────
+$seed_testi = [
+    ['name' => 'Marco R.',   'role' => 'Consulente',            'quote' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.'],
+    ['name' => 'Giulia T.',  'role' => 'Imprenditrice',         'quote' => 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.'],
+    ['name' => 'Luca M.',    'role' => 'Libero professionista', 'quote' => 'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'],
+    ['name' => 'Sara F.',    'role' => 'Artigiana',             'quote' => 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium totam rem.'],
+    ['name' => 'Davide C.',  'role' => 'Commerciante',          'quote' => 'Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores.'],
+    ['name' => 'Anna B.',    'role' => 'Freelance',             'quote' => 'Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet consectetur adipisci velit sed quia.'],
+    ['name' => 'Roberto V.', 'role' => 'Titolare PMI',          'quote' => 'Ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam quis nostrum exercitationem.'],
+    ['name' => 'Chiara P.',  'role' => 'Studio legale',         'quote' => 'Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur.'],
+    ['name' => 'Filippo S.', 'role' => 'Architetto',            'quote' => 'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque.'],
+    ['name' => 'Elena G.',   'role' => 'Coach',                 'quote' => 'Nam libero tempore cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime.'],
+];
+$existing_testi = get_posts(['post_type' => 'pm_testimonial', 'posts_per_page' => 1, 'post_status' => 'publish']);
+if (empty($existing_testi)) {
+    foreach ($seed_testi as $i => $t) {
+        $pid = wp_insert_post(['post_title' => $t['name'], 'post_type' => 'pm_testimonial', 'post_status' => 'publish', 'menu_order' => $i]);
+        if ($pid && ! is_wp_error($pid)) {
+            update_post_meta($pid, '_pm_testi_quote', $t['quote']);
+            update_post_meta($pid, '_pm_testi_role',  $t['role']);
+        }
+    }
+}
+
 // ── Helpers ───────────────────────────────────────────────────────────────
 function uid(): string { return substr(md5(uniqid('', true)), 0, 7); }
 
@@ -101,71 +125,21 @@ function pillar_card(string $eyebrow_t, string $title_t, string $text): array {
 // ── Build homepage elements ───────────────────────────────────────────────
 $elements = [
 
-    // 1. Hero
+    // 1. Pitch
     section([
         narrow([
-            eyebrow('POCKET MANAGER'),
-            heading('Strategia di business per chi lavora in proprio', 'h1', 'center', '#171E34', 48),
-            subtitle('Competenze manageriali accessibili. Per professionisti e piccole imprese che vogliono crescere con metodo.'),
-            cont(['flex_direction'=>'row','align_items'=>'center','justify_content'=>'center','gap'=>['unit'=>'px','size'=>16],'flex_wrap'=>'wrap'], [
-                btn('Scopri il Metodo', home_url('/metodo-pocket/'), '#171E34', '#E9E3DA'),
-                btn('Lavoriamo insieme', 'https://sl1nk.com/come-possiamo-aiutarti', 'transparent', '#171E34'),
-            ]),
+            heading('Lorem ipsum dolor sit amet, consectetur adipiscing elit.', 'h1', 'center', '#171E34', 48),
+            subtitle('Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.'),
         ], ['align_items'=>'center']),
     ], [
         'background_background' => 'classic',
         'background_color'      => '#E9E3DA',
-        'padding' => ['unit'=>'px','top'=>'120','right'=>'0','bottom'=>'120','left'=>'0','isLinked'=>false],
+        'padding' => ['unit'=>'px','top'=>'64','right'=>'0','bottom'=>'64','left'=>'0','isLinked'=>false],
     ]),
 
-    // 2. Intro
-    section([
-        narrow([
-            eyebrow('IL PROBLEMA'),
-            heading('La strategia non è un lusso — è una necessità.', 'h2', 'center', '#171E34', 34),
-            body_text('<p>Per troppo tempo gli strumenti di management sono stati pensati solo per le grandi aziende. Pocket Manager nasce per cambiare questo: rendere la consulenza strategica <strong>immediata, accessibile e concreta</strong> per chi lavora in proprio.</p>', 'center', 17),
-        ], ['align_items'=>'center']),
-    ], [
-        'background_background' => 'classic', 'background_color' => '#ffffff',
-        'padding' => ['unit'=>'px','top'=>'96','right'=>'0','bottom'=>'96','left'=>'0','isLinked'=>false],
-    ]),
-
-    // 3. Tre pilastri
+    // 2. Quiz
     section([
         inner([
-            eyebrow('IL METODO'),
-            heading('Small · Smart · Slow', 'h2', 'center', '#171E34', 34),
-            body_text('<p>Tre parole che sintetizzano una filosofia: lavorare su ciò che conta davvero, con lucidità e senza fretta.</p>', 'center', 16),
-        ], ['align_items'=>'center','_margin'=>['unit'=>'px','top'=>'0','right'=>'0','bottom'=>'40','left'=>'0','isLinked'=>false]]),
-        inner([
-            pillar_card('SMALL', 'Dimensione è una scelta', 'Piccolo non è un limite, è una posizione strategica. Lavorare su scala ridotta permette flessibilità, qualità e relazioni autentiche.'),
-            pillar_card('SMART', 'Chiarezza prima di tutto', 'Decisioni basate su dati, non su istinto. Strumenti semplici ma potenti per capire dove sei e dove vuoi andare.'),
-            pillar_card('SLOW', 'Crescita sostenibile', 'Costruire qualcosa che duri nel tempo. Senza accelerare a tutti i costi, ma con una direzione chiara e passi concreti.'),
-        ], ['flex_direction'=>'row','gap'=>['unit'=>'px','size'=>24],'align_items'=>'stretch']),
-    ], [
-        'background_background' => 'classic', 'background_color' => '#F7F4F0',
-        'padding' => ['unit'=>'px','top'=>'96','right'=>'0','bottom'=>'96','left'=>'0','isLinked'=>false],
-    ]),
-
-    // 4. Team preview
-    section([
-        inner([
-            eyebrow('IL TEAM'),
-            heading('I tuoi Pocket Manager', 'h2', 'center', '#171E34', 34),
-            body_text('<p>Professionisti con esperienza manageriale reale, pronti a lavorare al tuo fianco.</p>', 'center', 16),
-            shortcode('[pm_team type="all" cols="3"]'),
-        ], ['align_items'=>'center']),
-    ], [
-        'background_background' => 'classic', 'background_color' => '#ffffff',
-        'padding' => ['unit'=>'px','top'=>'96','right'=>'0','bottom'=>'96','left'=>'0','isLinked'=>false],
-    ]),
-
-    // 5. Quiz
-    section([
-        inner([
-            eyebrow('TROVA IL TUO PERCORSO'),
-            heading('Scopri quale servizio fa per te', 'h2', 'center', '#171E34', 32),
-            body_text('<p>Rispondi a una domanda. Ti aiutiamo a capire di cosa ha bisogno il tuo business.</p>', 'center', 16),
             shortcode('[pm_quiz]'),
         ], ['align_items'=>'center']),
     ], [
@@ -173,18 +147,12 @@ $elements = [
         'padding' => ['unit'=>'px','top'=>'80','right'=>'0','bottom'=>'80','left'=>'0','isLinked'=>false],
     ]),
 
-    // 6. CTA finale
+    // 3. Testimonianze a nastro
     section([
-        narrow([
-            heading('Pronto a fare chiarezza nel tuo business?', 'h2', 'center', '#E9E3DA', 32),
-            cont(['flex_direction'=>'row','align_items'=>'center','justify_content'=>'center','gap'=>['unit'=>'px','size'=>16],'flex_wrap'=>'wrap'], [
-                btn('Lavoriamo insieme', 'https://sl1nk.com/come-possiamo-aiutarti', '#E9E3DA', '#171E34'),
-                btn('Scopri il Metodo', home_url('/metodo-pocket/'), 'transparent', '#E9E3DA'),
-            ]),
-        ], ['align_items'=>'center']),
+        shortcode('[pm_testimonials]'),
     ], [
-        'background_background' => 'classic', 'background_color' => '#171E34',
-        'padding' => ['unit'=>'px','top'=>'100','right'=>'0','bottom'=>'100','left'=>'0','isLinked'=>false],
+        'background_background' => 'classic', 'background_color' => '#ffffff',
+        'padding' => ['unit'=>'px','top'=>'64','right'=>'0','bottom'=>'64','left'=>'0','isLinked'=>false],
     ]),
 ];
 

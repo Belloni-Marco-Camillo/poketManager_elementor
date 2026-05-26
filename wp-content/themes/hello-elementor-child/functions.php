@@ -3,6 +3,7 @@
 // ── Includes ───────────────────────────────────────────────────────────
 require_once get_stylesheet_directory() . '/inc/post-types.php';
 require_once get_stylesheet_directory() . '/inc/acf-fields.php';
+require_once get_stylesheet_directory() . '/inc/testimonials.php';
 
 // ── Enqueue assets ─────────────────────────────────────────────────────
 add_action('wp_enqueue_scripts', function () {
