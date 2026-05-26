@@ -224,6 +224,9 @@ if ($exists) {
 update_post_meta($page_id, '_elementor_edit_mode', 'builder');
 update_post_meta($page_id, '_elementor_template_type', 'wp-page');
 delete_post_meta($page_id, '_elementor_css');
+delete_post_meta($page_id, '_elementor_element_cache');
+$elementor_css = WP_CONTENT_DIR . '/uploads/elementor/css/post-' . $page_id . '.css';
+@unlink($elementor_css);
 
 // ── Set as static front page ──────────────────────────────────────────────
 update_option('show_on_front', 'page');

@@ -33,4 +33,16 @@
     }
     window.addEventListener('scroll', onScroll, { passive: true });
   }
+
+  // Pillar cards stagger
+  var pillarsRow = document.querySelector('.pm-pillars-row');
+  if (pillarsRow) {
+    var pillarsObs = new IntersectionObserver(function(entries) {
+      if (entries[0].isIntersecting) {
+        setTimeout(function() { pillarsRow.classList.add('is-visible'); }, 60);
+        pillarsObs.disconnect();
+      }
+    }, { threshold: 0.15 });
+    pillarsObs.observe(pillarsRow);
+  }
 })();

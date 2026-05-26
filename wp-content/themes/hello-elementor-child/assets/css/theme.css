@@ -771,3 +771,22 @@ p { line-height: 1.7; }
   .pml-cta { padding: 2rem 1.5rem; }
   .pml-nav-links { grid-template-columns: 1fr; }
 }
+
+/* ── Pillar cards: 80vw + stagger animation ───────────────────────────── */
+.pm-pillars-row > .e-con-inner {
+  max-width: min(80vw, 1200px) !important;
+}
+
+.pm-pillars-row > .e-con-inner > .e-con {
+  opacity: 0 !important;
+  transform: translateY(28px);
+  transition: opacity 0.9s ease, transform 0.9s cubic-bezier(0.22,1,0.36,1);
+}
+.pm-pillars-row > .e-con-inner > .e-con:nth-child(1) { transition-delay: 0.1s; }
+.pm-pillars-row > .e-con-inner > .e-con:nth-child(2) { transition-delay: 0.35s; }
+.pm-pillars-row > .e-con-inner > .e-con:nth-child(3) { transition-delay: 0.6s; }
+
+.pm-pillars-row.is-visible > .e-con-inner > .e-con {
+  opacity: 1 !important;
+  transform: translateY(0);
+}
