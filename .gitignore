@@ -4,6 +4,9 @@ wp-config.php
 # Upload utenti
 wp-content/uploads/
 
+# Backup All-in-One WP Migration
+wp-content/ai1wm-backups/
+
 # Cache
 wp-content/cache/
 wp-content/upgrade/
